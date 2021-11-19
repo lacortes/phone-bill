@@ -1,0 +1,108 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    }, 
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
+    ],
+    "parser": "",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks"
+    ], 
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "detect"
+        }
+    },
+    "rules": {
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/prop-types": [
+            "off"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-var": "error", 
+        "object-curly-newline": [
+            "error",
+            {
+                "ObjectExpression": {
+                    "minProperties": 4,
+                    "multiline": true
+                },
+                "ObjectPattern": {
+                    "consistent": true
+                },
+                "ImportDeclaration": {
+                    "consistent": true
+                },
+                "ExportDeclaration": {
+                    "consistent": true
+                }
+            }
+        ], 
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "array-bracket-spacing": [
+            "error",
+            "always", 
+            {
+                "objectsInArrays": false,
+                "arraysInArrays": false
+            }
+        ],
+        "dot-location": [
+            "error",
+            "property"
+        ],
+        "dot-notation": [
+            "error",
+            {
+                // https://eslint.org/docs/rules/dot-notation#allowpattern
+                "allowPattern": "^[a-z]+(_[a-z]+)+$"
+            }
+        ],
+        "eqeqeq": [
+            "error",
+            // Not "smart" to avoid confusion because of inconsistency
+            "always"
+        ], 
+        "prefer-object-spread": "error",
+        "brace-style": [
+            "error",
+            "1tbs",
+            {
+                "allowSingleLine": true
+            }
+        ]
+    }
+}

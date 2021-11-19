@@ -1,0 +1,38 @@
+{
+  "name": "react-blueprint",
+  "version": "1.0.0",
+  "description": "React JS Blueprint",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --open --env mode=development",
+    "build": "webpack --env mode=production",
+    "lint": "./node_modules/.bin/eslint src/ --ext .js,.jsx",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "author": "Luis Cortes",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.3",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.0",
+    "eslint": "^8.2.0",
+    "eslint-plugin-react": "^7.27.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.4",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
+    "webpack": "^5.61.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  }
+}
