@@ -25,6 +25,13 @@
             "version": "detect"
         }
     },
+    "overrides": [
+        {
+            "files": ["src/**/__test__/**"],
+            "plugins": ["jest"],
+            "extends": ["plugin:jest/recommended"]
+        }
+    ],
     "rules": {
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
