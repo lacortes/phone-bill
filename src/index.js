@@ -4,5 +4,10 @@ import App from './components/App';
 
 const container = document.querySelector('#root');
 if (container) {
-    ReactDOM.render(<App />, container);
+    ReactDOM.render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>, 
+        container
+    );
 }
