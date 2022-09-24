@@ -27,7 +27,7 @@
     },
     "overrides": [
         {
-            "files": ["src/**/__test__/**"],
+            "files": ["src/**/__tests__/**"],
             "plugins": ["jest"],
             "extends": ["plugin:jest/recommended"]
         }
