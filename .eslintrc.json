@@ -8,7 +8,7 @@
         "plugin:react/recommended",
         "plugin:react-hooks/recommended"
     ],
-    "parser": "",
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -33,7 +33,8 @@
         }
     ],
     "rules": {
-        "react/jsx-uses-react": "error",
+        "react/jsx-uses-react": "off",
+        "react/react-in-jsx-scope": "off",
         "react/jsx-uses-vars": "error",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",

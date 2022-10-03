@@ -1,13 +1,17 @@
+import { ThemeProvider } from '@mui/material';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './components/App';
+import { theme } from './theme';
 
 const container = document.querySelector('#root');
 if (container) {
-    ReactDOM.render(
+    const root = createRoot(container);
+    root.render(
         <React.StrictMode>
-            <App />
-        </React.StrictMode>, 
-        container
+            <ThemeProvider theme={theme}>
+                <App />
+            </ThemeProvider>
+        </React.StrictMode>
     );
 }
