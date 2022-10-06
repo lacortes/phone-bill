@@ -20,7 +20,7 @@ const App = () => {
             <AppBar position='static' sx={{ boxShadow: 'none' }}>
                 <Container>
                     <Toolbar sx={{ justifyContent: 'center' }}>
-                        <Typography variant='h5'>{statement?.monthYear}</Typography>
+                        <Typography variant='h5'>{`${statement?.month}, ${statement?.year}`}</Typography>
                     </Toolbar>
                 </Container>
             </AppBar>

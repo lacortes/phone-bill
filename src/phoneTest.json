@@ -1,5 +1,6 @@
 {
-  "monthYear": "September, 2022",
+  "month": "September",
+  "year": "2022",
   "phoneStatements": [
     {
       "number": "2696",
@@ -9,7 +10,7 @@
           "id": 1,
           "description": "Line",
           "amount": 33.33
-        }, 
+        },
         {
           "id": 2,
           "description": "Device",
