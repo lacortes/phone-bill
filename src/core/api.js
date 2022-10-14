@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { API_ROOT } from '../core/config/environment';
 
-const api = axios.create({ baseURL: API_ROOT });
+const api = axios.create({ baseURL: 'https://api.cortes-debt.com' });
 
 
 const getStatement = async statementID => {
