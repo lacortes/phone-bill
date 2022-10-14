@@ -30,7 +30,7 @@ const PhoneBill = ({ statement=defaultStatement }) => {
                                 key={detail.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="left">{detail.description}</TableCell>
+                                <TableCell align="left">{detail.title}</TableCell>
                                 <TableCell align="left">{formatNumber(detail.amount)}</TableCell>
                             </TableRow>
                         ))}
