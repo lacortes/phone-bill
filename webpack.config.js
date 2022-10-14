@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MinCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = env => {
 
@@ -12,10 +13,12 @@ module.exports = env => {
         output: {
             path: path.join(__dirname, '/dist'), 
             filename: 'bundle.js',
+            publicPath: '/',
             clean: true
         },
         devServer: {
-            port: 3010
+            port: 3010,
+            historyApiFallback: true,
         },
         module: {
             rules: [
@@ -48,6 +51,9 @@ module.exports = env => {
             new ESLintPlugin({
                 overrideConfigFile: path.resolve(__dirname, '.eslintrc.json'),
                 extensions: ['.jsx', '.js']
+            }), 
+            new Dotenv({
+                path: `./env.${ env.mode }`
             })
         ]
     }

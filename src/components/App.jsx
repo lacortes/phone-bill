@@ -1,36 +1,18 @@
-import { AppBar, Container, Stack, Toolbar, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
 import '../styles/app.scss';
-import PhoneBill from './PhoneBill';
-import phoneData from '../phoneTest.json';
+import Dashboard from './Dashboard';
+import Login from './Login';
+import AuthProvider from '../providers/ApiProvider';
 
 const App = () => {
-    const [ statement, setStatement ] = useState();
-    
-    const fetchData = async () => {
-        setStatement(phoneData);
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     return (
-        <>
-            <AppBar position='static' sx={{ boxShadow: 'none' }}>
-                <Container>
-                    <Toolbar sx={{ justifyContent: 'center' }}>
-                        <Typography variant='h5'>{`${statement?.month}, ${statement?.year}`}</Typography>
-                    </Toolbar>
-                </Container>
-            </AppBar>
-            <Toolbar />
-            <Container>
-                <Stack gap={2}>
-                    {statement?.phoneStatements.map(s => <PhoneBill key={s.number} statement={s} />)}
-                </Stack>
-            </Container>
-        </>
+        <AuthProvider>
+            <Routes>
+                <Route path="/" element={<Dashboard />}/>
+                <Route path="/login" element={<Login />} />
+            </Routes>
+        </AuthProvider>
     );
 };
 
