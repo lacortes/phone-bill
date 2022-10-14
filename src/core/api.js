@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { API_ROOT } from '../core/config/environment';
 
-const api = axios.create({ baseURL: 'https://rpvh9gz96b.execute-api.us-west-1.amazonaws.com' });
+const api = axios.create({ baseURL: API_ROOT });
 
 
 const getStatement = async statementID => {
