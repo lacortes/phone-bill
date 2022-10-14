@@ -53,7 +53,7 @@ module.exports = env => {
                 extensions: ['.jsx', '.js']
             }), 
             new Dotenv({
-                path: `./env.${ env.mode }`
+                path: `./.env.${ env.mode }`
             })
         ]
     }
