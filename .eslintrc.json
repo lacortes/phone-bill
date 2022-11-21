@@ -20,7 +20,8 @@
     },
     "plugins": [
         "react",
-        "react-hooks"
+        "react-hooks",
+        "jest"
     ], 
     "settings": {
         "react": {
@@ -30,7 +31,7 @@
     },
     "overrides": [
         {
-            "files": ["src/**/__tests__/**"],
+            "files": ["src/**/__tests__/**", "jest.setup.js"],
             "plugins": ["jest"],
             "extends": ["plugin:jest/recommended"]
         }
