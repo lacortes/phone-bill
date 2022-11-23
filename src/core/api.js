@@ -3,7 +3,7 @@ import axios from 'axios';
 const api = axios.create({ baseURL: 'https://api.cortes-debt.com' });
 
 
-const getStatement = async statementID => {
+const fetchStatement = async statementID => {
     if (!statementID) {
         return Promise.reject();
     }
@@ -17,8 +17,10 @@ const getStatement = async statementID => {
 
 };
 
-const getDashboard = async () => getStatement('0-0');
+const getDashboard = async () => fetchStatement('0-0');
+const getStatement = async (month, year) => fetchStatement(`${year}-${month}`);
 
 export {
-    getDashboard
+    getDashboard, 
+    getStatement
 };
