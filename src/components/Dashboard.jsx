@@ -1,24 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useApi } from '../providers/ApiProvider';
+import months from '../util/months';
 
-import { AppBar, Container, Stack, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Container, Stack, Toolbar, Typography } from '@mui/material';
 
 import PhoneBill from './PhoneBill';
-
-const months = {
-    1: 'January',
-    2: 'February',
-    3: 'March',
-    4: 'April',
-    5: 'May',
-    6: 'June',
-    7: 'July',
-    8: 'August',
-    9: 'September',
-    10: 'October',
-    11: 'November',
-    12: 'December'
-};
+import LoadingStatement from './LoadingStatement';
+import SelectStatement from './SelectStatement';
 
 const Dashboard = () => {
     const [ statement, setStatement ] = useState();
@@ -30,22 +18,33 @@ const Dashboard = () => {
 
     return (
         <>
-            <AppBar position='static' sx={{ boxShadow: 'none' }}>
-                <Container>
-                    <Toolbar sx={{ justifyContent: 'center' }}>
-                        <Typography variant='h5'>{`${months[ statement?.month ] ?? '0'}, ${statement?.year ?? '0'}`}</Typography>
-                    </Toolbar>
-                </Container>
-            </AppBar>
-            <Toolbar />
-            <Container>
-                <Stack gap={2}>
-                    {
-                        statement?.phoneStatements.map(s => <PhoneBill key={s.number} statement={s} />) 
-                        ?? <h1>No Statement Found</h1>
-                    }
-                </Stack>
-            </Container>
+            {
+                statement?.phoneStatements.length ?? 0 > 0 ? (
+                    <>
+                        <AppBar position='static' sx={{ boxShadow: 'none' }}>
+                            <Container>
+                                <Toolbar sx={{ justifyContent: 'center' }}>
+                                    <Typography variant='h5'>{`${months[ statement?.month ] ?? '0'}, ${statement?.year ?? '0'}`}</Typography>
+                                </Toolbar>
+                            </Container>
+                        </AppBar>
+                        <Toolbar />
+                        <Container>
+                            <Box mb={4}>
+                                <SelectStatement onSuccess={setStatement} month={statement.month} year={statement.year} />
+                            </Box>
+                            <Stack gap={2}>
+                                {
+                                    statement.phoneStatements.map(s => <PhoneBill key={s.number} statement={s} />) 
+                                }
+                            </Stack>
+                        </Container>
+                    </>
+                ) : (
+                    <LoadingStatement />
+                )
+            }
+            
         </>
     );
 };
