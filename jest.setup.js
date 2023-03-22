@@ -3,6 +3,8 @@ import '@testing-library/jest-dom';
 // src/setupTests.js
 import { server } from './src/mocks/server';
 
+jest.mock('./src/core/services/cognitoService');
+
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 

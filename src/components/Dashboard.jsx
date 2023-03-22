@@ -13,7 +13,7 @@ const Dashboard = () => {
     const api = useApi();
 
     useEffect(() => {
-        api.getDashboard().then(setStatement).catch(console.error);
+        api.getDashboard().then(setStatement).catch(err => console.error(err.response));
     }, [ api ]);
 
     return (

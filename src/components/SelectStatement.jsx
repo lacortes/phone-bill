@@ -1,64 +1,16 @@
 import { useEffect, useState, forwardRef } from 'react';
-import months from '../util/months';
 
-import { Box, Button, FormControl, InputLabel, Select, MenuItem, CircularProgress, Snackbar } from '@mui/material';
+import { Box, Button, FormControl, CircularProgress, Snackbar } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import MuiAlert from '@mui/material/Alert';
 
 import { useApi } from '../providers/ApiProvider';
-
-const now = new Date();
-const currentYear = now.getFullYear();
-
-const years = (() => {
-    const list = [];
-    for (let start=2022; start <= currentYear; start++) {
-        list.push(start);
-    }
-    return list;
-})();
+import YearSelect from './YearSelect';
+import MonthSelect from './MonthSelect';
 
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-  
-
-const YearSelect = ({ year, setYear }) => {
-    return (
-        <>
-            <InputLabel id="year-select">Year</InputLabel>
-            <Select
-                labelId="year-select"
-                label="Year"
-                id='year-select-id'
-                value={year}
-                onChange={e => setYear(e.target.value)}
-            >
-                {years.map(year => <MenuItem key={year} value={year}>{year}</MenuItem>)}
-            </Select>
-        </>
-    );
-};
-
-const MonthSelect = ({ month, setMonth }) => {
-    return (
-        <>
-            <InputLabel id="month-select">Month</InputLabel>
-            <Select
-                labelId="month-select"
-                id="month-select-id"
-                label="Month"
-                value={month}
-                onChange={e => setMonth(e.target.value)}
-            >
-                {Object.entries(months).map( monthArray => {
-                    const [ key, month ] = monthArray;
-                    return (<MenuItem key={key} value={key}>{month}</MenuItem>);
-                })}
-            </Select>
-        </>
-    );
-};
 
 
 const SelectStatement = ({ onSuccess, month='', year='' }) => {
@@ -104,20 +56,17 @@ const SelectStatement = ({ onSuccess, month='', year='' }) => {
         <>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <FormControl sx={{ m:1, minWidth: 125 }} size='small'>
-                    <MonthSelect month={selectedMonth} setMonth={setSelectedMonth}/>
+                    <MonthSelect month={selectedMonth} onMonthSelected={setSelectedMonth}/>
                 </FormControl>
                 <FormControl sx={{ m:1, minWidth: 100 }} size='small'>
-                    <YearSelect year={selectedYear} setYear={setSelectedYear}/>
+                    <YearSelect year={selectedYear} onYearSelected={setSelectedYear}/>
                 </FormControl>
                 <Box sx={{ position: 'relative' }}>
                     <Button 
                         size='small' 
                         onClick={() => onViewStatement()} 
                         variant='outlined' 
-                        sx={{ 
-                            height: 40, 
-                            ml: 1, 
-                        }}
+                        sx={{   ml: 1, }}
                         disabled={isLoading || failure}
                         endIcon={success && <CheckIcon/>}
                     >

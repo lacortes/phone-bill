@@ -55,7 +55,8 @@ module.exports = env => {
             new Dotenv({
                 path: `./.env.${ env.mode }`
             })
-        ]
+        ],
+        devtool: 'source-map'
     }
 
 };
