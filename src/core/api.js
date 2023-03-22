@@ -6,6 +6,7 @@ const api = axios.create({ baseURL: API_ROOT });
 
 
 const fetchStatement = async statementID => {
+const fetchStatement = async statementID => {
     if (!statementID) {
         return Promise.reject();
     }
