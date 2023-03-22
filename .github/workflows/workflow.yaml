@@ -23,6 +23,8 @@ jobs:
         with:
           envkey_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
           envkey_USER_CLIENT_ID: ${{ secrets.COGNITO_CLIENT_ID }}
+          envkey_APP_DOMAIN: "cortes-debt.com"
+          envkey_API_ROOT: "api.cortes-debt.com"
           file_name: .env.production
           fail_on_empty: true
       - name: NPM Install
