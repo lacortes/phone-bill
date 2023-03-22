@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { Container, Box, TextField, Avatar, Typography, Grid, Button, Checkbox, Link, FormControlLabel, InputAdornment, IconButton } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-
-import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import cognitoService from '../core/services/cognitoService';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
@@ -15,6 +16,8 @@ const Login = () => {
     const [ invalidPhone, setInvalidPhone ] = useState(false);
     const [ invalidPass, setInvalidPass ] = useState(false);
     const [ phoneHelperText, setPhoneHelperText ] = useState(''); 
+
+    const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword(old => !old);
     const handleMouseDownPassword = e => e.preventDefault();
@@ -43,34 +46,15 @@ const Login = () => {
             return;
         }
 
-        const authData = {
-            Username: `+1${phoneNumber}`,
-            Password: password
-        };
-        const authDetails = new AuthenticationDetails(authData);
-        
-        const poolData = {
-            UserPoolId: 'us-west-1_yiArRjdB3',
-            ClientId: 'cp1hoju50avv494h39vdghr7m'
-        };
-        const userPool = new CognitoUserPool(poolData);
-        
-        const userData = {
-            Username: `+1${phoneNumber}`,
-            Pool: userPool
-        };
-        const cognitoUser = new CognitoUser(userData);
-        cognitoUser.authenticateUser(authDetails, {
-            onSuccess: result => {
-                console.log('on Success');
-                console.log(result);
-            },
+        (async () => {  
+            try {
+                await cognitoService.authenticateUser(phoneNumber, password);
+                navigate('/admin/statements', { replace: true });
+            } catch (err) {
+                console.error(err);
+            }
+        })();
 
-            onFailure: result => {
-                console.log('onFailure');
-                console.log(result);
-            },
-        });
     };
 
     return (

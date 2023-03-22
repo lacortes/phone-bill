@@ -1,8 +1,7 @@
-import { Accordion, AccordionDetails, AccordionSummary, Table, TableRow, TableBody, TableCell, Typography } from '@mui/material';
+import { AccordionDetails, AccordionSummary, Table, TableRow, TableBody, TableCell, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import styled from '@emotion/styled';
+import StatementAccordion from './StatementAccordion';
 
-const StyledAccordion = styled(Accordion)({ border: 'solid #000000 1px', boxShadow: 'none' });
 
 const defaultStatement = { number: '0000', total: 0.00, details: [{ id: 0, description: 'N/A', amount: 0.00 }] };
 
@@ -12,7 +11,7 @@ const formatNumber = number => FORMATTER.format(number);
 const PhoneBill = ({ statement=defaultStatement }) => {
     const { number, total, details } = statement;
     return (
-        <StyledAccordion square={true}>
+        <StatementAccordion square={true}>
             <AccordionSummary 
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panelia-content"
@@ -38,7 +37,7 @@ const PhoneBill = ({ statement=defaultStatement }) => {
                     </TableBody>
                 </Table>
             </AccordionDetails>
-        </StyledAccordion>
+        </StatementAccordion>
     );
 };
 

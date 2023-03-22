@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -12,6 +12,7 @@ if (container) {
         <React.StrictMode>
             <BrowserRouter>
                 <ThemeProvider theme={theme}>
+                    <CssBaseline />
                     <App />
                 </ThemeProvider>
             </BrowserRouter>

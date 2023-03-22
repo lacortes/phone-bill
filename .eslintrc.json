@@ -21,7 +21,9 @@
     "plugins": [
         "react",
         "react-hooks",
-        "jest"
+        "jest",
+        "jest-dom",
+        "testing-library"
     ], 
     "settings": {
         "react": {
