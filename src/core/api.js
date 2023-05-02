@@ -42,7 +42,19 @@ const makeAuthApi = ({ token }) => {
             }
         };
 
-        return Object.freeze({ getStatementDashboard, createStatement });
+        const updateStatement = async (statement) => {
+            const { year, month } = statement;
+
+            const statementId = `${year}-${month}`;
+            try {
+                await authApi.put(`/statements/${ statementId }`, statement);
+                return Promise.resolve();
+            } catch (err) {
+                return Promise.reject(err);
+            }
+        };
+
+        return Object.freeze({ getStatementDashboard, createStatement, updateStatement });
 
     };
 };

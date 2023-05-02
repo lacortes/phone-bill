@@ -42,7 +42,8 @@ const ApiProvider = ({ children }) => {
                     getDashboard, 
                     getStatement,
                     getStatementDashboard: authApi.getStatementDashboard,
-                    createStatement: authApi.createStatement
+                    createStatement: authApi.createStatement,
+                    updateStatement: authApi.updateStatement,
                 }}
             >
                 {children}
