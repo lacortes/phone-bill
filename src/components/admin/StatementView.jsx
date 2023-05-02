@@ -2,9 +2,11 @@ import { Alert, Box, Button, Stack, TextField, Typography } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router';
 import { useApi } from '../../providers/ApiProvider';
 import PhoneLine from './PhoneLine';
+import messageService from '../../core/services/messageService';
 
 let index = 0;
 const MIN_DATE = dayjs(new Date(2022, 1, 1));
@@ -14,12 +16,44 @@ const USDollar = new Intl.NumberFormat('en-US', {
     currency: 'USD',
 });
 
-const CreateStatement = () => {
+const StatementView = () => {
     const [ lines, setLines ] = useState([]);
     const [ dueDate, setDueDate ] = useState(null);
     const [ errorMsg, setErrorMsg ] = useState();
+    const [ successMsg, setSuccessMsg ] = useState();
     const [ total, setTotal ]  = useState(0.0);
+    const [ isEditMode, setIsEditMode ] = useState(false);
+
     const api = useApi();
+    const statement = useLoaderData();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const myFunction = (e) => {
+            e.preventDefault();
+
+            e.returnValue = '';
+        };
+
+        window.addEventListener('beforeunload', myFunction);
+
+        return () => {
+            window.removeEventListener('beforeunload', myFunction);
+        };
+    }, []);
+
+    useEffect(() => {   
+        if (!statement) return;
+        
+        const { dueDay, month, year, phoneStatements, total } = statement;
+        
+        setIsEditMode(true);
+        setDueDate(dayjs(new Date(year, month - 1, dueDay)));
+        setTotal(total);
+        
+        setLines(phoneStatements.map((line, idx) => ({ ...line, id: idx })));
+
+    }, [ statement ]);
 
     const onDeleteLine = (line) => {
         setLines(lines.filter(l => l.id !== line.id));
@@ -37,9 +71,10 @@ const CreateStatement = () => {
         
         setTotal(updatedTotal);
         setLines(newLines);
+    
     };
 
-    const prepareStatement = () => {
+    const prepareStatement = (overrides) => {
         const dueDay = dueDate.get('date');
         const month = dueDate.get('month') + 1; // In our app, Jan starts at 1
         const year = dueDate.get('year');
@@ -54,8 +89,8 @@ const CreateStatement = () => {
             month,
             year, 
             total, 
-            createDateTime: (new Date()).toISOString(),
-            phoneStatements: lines.map(prepareLineItem) // Update ids
+            phoneStatements: lines.map(prepareLineItem), // Update ids,
+            ...overrides
         };
     };
 
@@ -73,6 +108,21 @@ const CreateStatement = () => {
     const createStatement = async (statement) => {
         try {
             await api.createStatement(statement);
+            messageService.set('Successfully created statement');
+            navigate('/admin/statements');
+        } catch (err) {
+            if (err.response) {
+                setErrorMsg(err.response.data.error);
+            } else {
+                setErrorMsg('Unknownn error');
+            }
+        }
+    };
+
+    const updateStatement = async (statement) => {
+        try {
+            await api.updateStatement(statement);
+            setSuccessMsg('Update successful');
         } catch (err) {
             if (err.response) {
                 setErrorMsg(err.response.data.error);
@@ -91,6 +141,9 @@ const CreateStatement = () => {
             <Stack spacing={5}>
                 {
                     errorMsg && <Alert severity='error' onClose={() => setErrorMsg(null)}>{errorMsg}</Alert>
+                }
+                {
+                    successMsg && <Alert security='success' onClose={() => setSuccessMsg(null)}>{successMsg}</Alert>
                 }
                 
                 <Stack direction='row' justifyContent='flexStart' alignItems='center' spacing={30}>
@@ -111,12 +164,17 @@ const CreateStatement = () => {
                         
                             if (msg) {
                                 setErrorMsg(msg);
+                            } else if (isEditMode) {
+                                updateStatement(prepareStatement({ 
+                                    lastUpdateDateTime: statement.lastUpdateDateTime,
+                                    createDateTime: statement.createDateTime
+                                }));
                             } else {
                                 createStatement(prepareStatement());
                             }
                         }}
                     >
-                        Create
+                        {isEditMode ? 'Update' :  'Create' }
                     </Button>
                 </Stack>
             
@@ -152,4 +210,4 @@ const CreateStatement = () => {
     );
 };
 
-export default CreateStatement;
+export default StatementView;

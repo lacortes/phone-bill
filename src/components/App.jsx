@@ -1,19 +1,19 @@
-import { Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, redirect, Route, RouterProvider } from 'react-router-dom';
 
 import '../styles/app.scss';
 import Dashboard from './Dashboard';
 import Login from './Login';
-import ApiProvider from '../providers/ApiProvider';
+import { useApi } from '../providers/ApiProvider';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import Admin from './Admin';
 import CheckIfLoggedIn from './CheckIfLoggedIn';
 import Statements from './admin/Statements';
-import CreateStatement from './admin/CreateStatement';
+import StatementView from './admin/StatementView';
 
-const App = () => {
-    return (
-        <ApiProvider>
-            <Routes>
+const makeRouter = (api) => {
+    return createBrowserRouter(
+        createRoutesFromElements(
+            <>
                 <Route path="/" element={<Dashboard />}/>
                 <Route path="/login" element={ 
                     <CheckIfLoggedIn>
@@ -26,10 +26,33 @@ const App = () => {
                     </AuthenticatedRoute>
                 }>
                     <Route path="statements" element={<Statements />} />
-                    <Route path="statements/createStatement" element={<CreateStatement />}/>
+                    <Route 
+                        path="statements/:statementId" 
+                        element={<StatementView />}
+                        loader={async ({ params }) => {
+                            
+                            const [ year, month ] = params.statementId.split('-');
+                            
+                            try {
+                                return await api.getStatement(month, year);
+                            } catch {
+                                throw redirect('/admin/statements');
+                            }
+                            
+                        }}    
+                    />
+                    <Route path="statements/new" element={<StatementView />}/>
                 </Route>
-            </Routes>
-        </ApiProvider>
+            </>
+        )
+    );
+};
+
+const App = () => {
+    const api = useApi();
+
+    return (
+        <RouterProvider router={makeRouter(api)}/>
     );
 };
 
