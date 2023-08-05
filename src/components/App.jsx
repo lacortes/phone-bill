@@ -40,7 +40,10 @@ const makeRouter = (api) => {
                             }
                             
                         }}    
-                    />
+                    >
+                        <Route path="clone"  element={StatementView} />
+
+                    </Route>
                     <Route path="statements/new" element={<StatementView />}/>
                 </Route>
             </>

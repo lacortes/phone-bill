@@ -13,7 +13,7 @@ const Admin = () => {
 
     const isTab = (tabName) => {
         const fullPath = window.location.href;
-        if (!fullPath) return '';
+        if (!fullPath) return false;
 
         const tokens = fullPath.split('/');
 

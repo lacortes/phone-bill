@@ -7,6 +7,7 @@ import { useLoaderData, useNavigate } from 'react-router';
 import { useApi } from '../../providers/ApiProvider';
 import PhoneLine from './PhoneLine';
 import messageService from '../../core/services/messageService';
+import { useLocation } from 'react-router-dom';
 
 let index = 0;
 const MIN_DATE = dayjs(new Date(2022, 1, 1));
@@ -23,6 +24,7 @@ const StatementView = () => {
     const [ successMsg, setSuccessMsg ] = useState();
     const [ total, setTotal ]  = useState(0.0);
     const [ isEditMode, setIsEditMode ] = useState(false);
+    const location = useLocation();
 
     const api = useApi();
     const statement = useLoaderData();
@@ -54,6 +56,13 @@ const StatementView = () => {
         setLines(phoneStatements.map((line, idx) => ({ ...line, id: idx })));
 
     }, [ statement ]);
+
+    useEffect(() => {
+        const ending = location.pathname.split('/').at(-1);
+        if (ending === 'clone') {
+            setIsEditMode(false);
+        }
+    }, [ location ]);
 
     const onDeleteLine = (line) => {
         setLines(lines.filter(l => l.id !== line.id));
