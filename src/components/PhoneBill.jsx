@@ -1,12 +1,10 @@
 import { AccordionDetails, AccordionSummary, Table, TableRow, TableBody, TableCell, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StatementAccordion from './StatementAccordion';
+import { formatNumber } from '../util/utils';
 
 
 const defaultStatement = { number: '0000', total: 0.00, details: [{ id: 0, description: 'N/A', amount: 0.00 }] };
-
-const FORMATTER = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-const formatNumber = number => FORMATTER.format(number);
 
 const PhoneBill = ({ statement=defaultStatement }) => {
     const { number, total, details } = statement;
