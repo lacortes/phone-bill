@@ -8,7 +8,7 @@ const setup = async () => {
     await waitFor(() => expect(screen.queryByTestId('circular-progress')).not.toBeInTheDocument());
 };
 
-describe('Dashboard - statment', () => {
+describe('Dashboard - statement', () => {
 
     test('Header has correct title', async () => {    
         await setup();
@@ -18,7 +18,7 @@ describe('Dashboard - statment', () => {
         expect(comp).toBeInTheDocument();
     });
 
-    test('Statement view controls exist', async () => {
+    test('Statement view exist', async () => {
         const october = 10;
         
         await setup();
@@ -33,7 +33,10 @@ describe('Dashboard - statment', () => {
         expect(yearInput).toBeInTheDocument();    
         
         const button = await screen.findByText(/view/i);
-        expect(button).toBeInTheDocument();
+        expect(button).toBeVisible();
+
+        const total = await screen.findByText(/total:/i);
+        expect(total).toBeVisible();
     });
 });
 

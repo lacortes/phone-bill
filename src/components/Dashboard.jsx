@@ -7,6 +7,7 @@ import { AppBar, Box, Container, Stack, Toolbar, Typography } from '@mui/materia
 import PhoneBill from './PhoneBill';
 import LoadingStatement from './LoadingStatement';
 import SelectStatement from './SelectStatement';
+import { formatNumber } from '../util/utils';
 
 const Dashboard = () => {
     const [ statement, setStatement ] = useState();
@@ -37,6 +38,7 @@ const Dashboard = () => {
                                 {
                                     statement.phoneStatements.map(s => <PhoneBill key={s.number} statement={s} />) 
                                 }
+                                <Typography variant='h5'>Total: {`${formatNumber(statement.total)}`}</Typography>
                             </Stack>
                         </Container>
                     </>
